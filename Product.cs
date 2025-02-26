@@ -16,4 +16,9 @@ public class Product
         this.Price = price;
         this.Quantity = quantity;
     }
+    
+    public override string ToString()
+    {
+        return $"Product: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
+    }
 }
