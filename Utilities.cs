@@ -43,7 +43,7 @@ public class Utilities
                 ShowRemoveProductDetails();
                 break;
             case "5":
-                //logic
+                ShowSearchProductDetails();
                 break;
             case "6":
                 break;
@@ -51,6 +51,32 @@ public class Utilities
                 Console.WriteLine("Invalid input. Try again.");
                 break;
             
+        }
+    }
+
+    private static void ShowSearchProductDetails()
+    {
+        Console.Clear();
+        
+        Console.WriteLine("Enter the product name:");
+        string name = Console.ReadLine();
+        
+        Product p = Inventory.GetProduct(name);
+
+        if (p != null)
+        {
+            Console.WriteLine("Product details:");
+            Console.WriteLine(p);
+            Console.WriteLine();
+            
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadLine();
+            ShowMainMenu();
+        }
+        else
+        {
+            Console.WriteLine("Product not found!");
+            ShowMainMenu();
         }
     }
 
