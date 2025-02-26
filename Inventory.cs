@@ -4,7 +4,7 @@ namespace SimpleInventoryManagementSystem;
 
 public class Inventory
 {
-    public static List<Product> Products = new();
+    public static readonly List<Product> Products = new();
 
     public static void AddProduct(Product product)
     {
@@ -13,7 +13,7 @@ public class Inventory
 
     public static string ViewProducts()
     {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
 
         foreach (var product in Products)
         {
@@ -23,7 +23,7 @@ public class Inventory
         return sb.ToString();
     }
 
-    public static Product GetProduct(string productName)
+    public static Product? GetProduct(string productName)
     {
         return Products.FirstOrDefault(p => p.Name.ToUpper() == productName.ToUpper());
     }
