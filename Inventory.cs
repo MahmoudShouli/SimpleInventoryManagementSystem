@@ -27,6 +27,9 @@ public class Inventory
     {
         return Products.FirstOrDefault(p => p.Name == productName);
     }
-    
-    
+
+    public static void RemoveProduct(Product product)
+    {
+        Products.Remove(product);
+    }
 }
