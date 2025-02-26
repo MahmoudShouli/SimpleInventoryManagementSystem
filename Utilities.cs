@@ -34,7 +34,7 @@ public class Utilities
                 ShowAddProductDetails();
                 break;
             case "2":
-                //logic
+                ShowAllProducts();
                 break;
             case "3":
                 //logic
@@ -52,6 +52,18 @@ public class Utilities
                 break;
             
         }
+    }
+
+    private static void ShowAllProducts()
+    {
+        Console.Clear();
+        Console.WriteLine("All products:");
+        
+        Console.WriteLine(Inventory.ViewProducts());
+        
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
+        ShowMainMenu();
     }
 
     private static void ShowAddProductDetails()
