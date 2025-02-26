@@ -22,4 +22,11 @@ public class Inventory
 
         return sb.ToString();
     }
+
+    public static Product GetProduct(string productName)
+    {
+        return Products.FirstOrDefault(p => p.Name == productName);
+    }
+    
+    
 }
