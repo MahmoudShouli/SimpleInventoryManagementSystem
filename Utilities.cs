@@ -37,7 +37,7 @@ public class Utilities
                 ShowAllProducts();
                 break;
             case "3":
-                //logic
+                ShowEditProductDetails();
                 break;
             case "4":
                 //logic
@@ -51,6 +51,40 @@ public class Utilities
                 Console.WriteLine("Invalid input. Try again.");
                 break;
             
+        }
+    }
+
+    private static void ShowEditProductDetails()
+    {
+        Console.Clear();
+        
+        Console.WriteLine("Enter the product name:");
+        string name = Console.ReadLine();
+        
+        Product p = Inventory.GetProduct(name);
+
+        if (p != null)
+        {
+            Console.WriteLine("Enter the new name:");
+            string newName = Console.ReadLine();
+        
+            Console.WriteLine("Enter the new price:");
+            double newPrice = double.Parse(Console.ReadLine());
+        
+            Console.WriteLine("Enter the new product quantity:");
+            int newQuantity = int.Parse(Console.ReadLine());
+            
+            p.EditProduct(newName, newPrice, newQuantity);
+            
+            Console.WriteLine("Product edited! Press any key to continue...");
+            Console.ReadLine();
+            ShowMainMenu();
+
+        }
+        else
+        {
+            Console.WriteLine("Product does not exist.");
+            ShowMainMenu();
         }
     }
 

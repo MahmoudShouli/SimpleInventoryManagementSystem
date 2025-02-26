@@ -21,4 +21,11 @@ public class Product
     {
         return $"Product: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
     }
+
+    public void EditProduct(string name, double price, int quantity)
+    {
+        this.Name = name;
+        this.Price = price;
+        this.Quantity = quantity;
+    }
 }
