@@ -2,11 +2,6 @@
 
 public class Inventory
 {
-    public List<Product> Products { get; }
-
-    public Inventory()
-    {
-        Products = new List<Product>();
-    }
+    public static List<Product> Products = new();
     
 }
