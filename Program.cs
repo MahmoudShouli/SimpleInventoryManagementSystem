@@ -2,7 +2,7 @@
 
 class Program
 {
-    static void Main()
+    private static void Main()
     {
         Utilities.InitializeInventory();
         Utilities.ShowMainMenu();

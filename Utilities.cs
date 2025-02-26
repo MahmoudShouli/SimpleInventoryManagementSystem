@@ -4,9 +4,9 @@ public class Utilities
 {
     public static void InitializeInventory()
     {
-        Product p1 = new Product("Chair", 20.55, 5);
-        Product p2 = new Product("Table", 50, 3);
-        Product p3 = new Product("Pen", 5.4, 20);
+        var p1 = new Product("Chair", 20.55, 5);
+        var p2 = new Product("Table", 50, 3);
+        var p3 = new Product("Pen", 5.4, 20);
         
         Inventory.Products.Add(p1);
         Inventory.Products.Add(p2);
@@ -27,7 +27,7 @@ public class Utilities
         
         Console.WriteLine("Your choice: ");
         
-        string? userInput = Console.ReadLine();
+        var userInput = Console.ReadLine();
         switch (userInput)
         {
             case "1":
@@ -46,22 +46,33 @@ public class Utilities
                 ShowSearchProductDetails();
                 break;
             case "6":
+                ShowExitMessage();
                 break;
             default:
-                Console.WriteLine("Invalid input. Try again.");
+                ShowMainMenu();
                 break;
             
         }
     }
 
-    private static void ShowSearchProductDetails()
+    private static void ShowExitMessage()
+    {
+        Console.WriteLine("Thank you for using our system!");
+    }
+
+    private static Product? IsProductExist()
     {
         Console.Clear();
         
         Console.WriteLine("Enter the product name:");
-        string name = Console.ReadLine();
+        var name = Console.ReadLine();
         
-        Product p = Inventory.GetProduct(name);
+        return Inventory.GetProduct(name);
+        
+    }
+    private static void ShowSearchProductDetails()
+    {
+        var p = IsProductExist();
 
         if (p != null)
         {
@@ -69,72 +80,53 @@ public class Utilities
             Console.WriteLine(p);
             Console.WriteLine();
             
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadLine();
-            ShowMainMenu();
+            ShowAnyKeyMessage("");
         }
         else
         {
-            Console.WriteLine("Product not found!");
-            ShowMainMenu();
+            ShowAnyKeyMessage("Product not found! ");
         }
     }
 
     private static void ShowRemoveProductDetails()
     {
-        Console.Clear();
-        
-        Console.WriteLine("Enter the product name:");
-        string name = Console.ReadLine();
-        
-        Product p = Inventory.GetProduct(name);
+        var p = IsProductExist();
 
         if (p != null)
         {
             Inventory.RemoveProduct(p);
             
-            Console.WriteLine("Product deleted! Press any key to continue...");
-            Console.ReadLine();
-            ShowMainMenu();
+            ShowAnyKeyMessage("Product deleted! ");
         }
         else
         {
-            Console.WriteLine("Product not found!");
-            ShowMainMenu();
+            ShowAnyKeyMessage("Product not found! ");
         }
     }
 
     private static void ShowEditProductDetails()
     {
-        Console.Clear();
-        
-        Console.WriteLine("Enter the product name:");
-        string name = Console.ReadLine();
-        
-        Product p = Inventory.GetProduct(name);
+        var p = IsProductExist();
 
         if (p != null)
         {
             Console.WriteLine("Enter the new name:");
-            string newName = Console.ReadLine();
+            var newName = Console.ReadLine();
         
             Console.WriteLine("Enter the new price:");
-            double newPrice = double.Parse(Console.ReadLine());
+            var newPrice = double.Parse(Console.ReadLine());
         
             Console.WriteLine("Enter the new product quantity:");
-            int newQuantity = int.Parse(Console.ReadLine());
+            var newQuantity = int.Parse(Console.ReadLine());
             
             p.EditProduct(newName, newPrice, newQuantity);
             
-            Console.WriteLine("Product edited! Press any key to continue...");
-            Console.ReadLine();
-            ShowMainMenu();
+            ShowAnyKeyMessage("Product edited! ");
 
         }
         else
         {
-            Console.WriteLine("Product does not exist.");
-            ShowMainMenu();
+            ShowAnyKeyMessage("Product not found! ");
         }
     }
 
@@ -145,9 +137,7 @@ public class Utilities
         
         Console.WriteLine(Inventory.ViewProducts());
         
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadLine();
-        ShowMainMenu();
+        ShowAnyKeyMessage("");
     }
 
     private static void ShowAddProductDetails()
@@ -155,17 +145,22 @@ public class Utilities
         Console.Clear();
         
         Console.WriteLine("Enter the new product name:");
-        string name = Console.ReadLine();
+        var name = Console.ReadLine();
         
         Console.WriteLine("Enter the new product price:");
-        double price = double.Parse(Console.ReadLine());
+        var price = double.Parse(Console.ReadLine());
         
         Console.WriteLine("Enter the new product quantity:");
-        int quantity = int.Parse(Console.ReadLine());
+        var quantity = int.Parse(Console.ReadLine());
         
         Inventory.AddProduct(new Product(name, price, quantity));
         
-        Console.WriteLine("Product added! Press any key to continue...");
+        ShowAnyKeyMessage("Product added! ");
+    }
+
+    private static void ShowAnyKeyMessage(string message)
+    {
+        Console.WriteLine(message + "Press any key to continue...");
         Console.ReadLine();
         ShowMainMenu();
     }

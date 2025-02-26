@@ -1,25 +1,19 @@
 ﻿namespace SimpleInventoryManagementSystem;
 
 public class Product
-{
-    private string name = string.Empty;
-    private double price;
-    private int quantity;
-    
-    public string Name { get => name; set => name = value; }
-    public double Price { get => price; set => price = value; }
-    public int Quantity { get => quantity; set => quantity = value; }
+{ 
+    public string Name { get; private set; } 
+    public double Price { get; private set; }
+    public int Quantity { get; private set; }
 
     public Product(string name, double price, int quantity)
     {
-        this.Name = name;
-        this.Price = price;
-        this.Quantity = quantity;
+        EditProduct(name, price, quantity);
     }
     
     public override string ToString()
     {
-        return $"Product: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
+        return $"Name: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
     }
 
     public void EditProduct(string name, double price, int quantity)
