@@ -67,7 +67,7 @@ public class Utilities
         Console.WriteLine("Enter the product name:");
         var name = Console.ReadLine();
         
-        return Inventory.GetProduct(name);
+        return Inventory.GetProduct(name!);
         
     }
     private static void ShowSearchProductDetails()
@@ -114,12 +114,12 @@ public class Utilities
             var newName = Console.ReadLine();
         
             Console.WriteLine("Enter the new price:");
-            var newPrice = double.Parse(Console.ReadLine());
+            var newPrice = double.Parse(Console.ReadLine()!);
         
             Console.WriteLine("Enter the new product quantity:");
-            var newQuantity = int.Parse(Console.ReadLine());
+            var newQuantity = int.Parse(Console.ReadLine()!);
             
-            p.EditProduct(newName, newPrice, newQuantity);
+            p.EditProduct(newName!, newPrice, newQuantity);
             
             ShowAnyKeyMessage("Product edited! ");
 
@@ -148,12 +148,12 @@ public class Utilities
         var name = Console.ReadLine();
         
         Console.WriteLine("Enter the new product price:");
-        var price = double.Parse(Console.ReadLine());
+        var price = double.Parse(Console.ReadLine()!);
         
         Console.WriteLine("Enter the new product quantity:");
-        var quantity = int.Parse(Console.ReadLine());
+        var quantity = int.Parse(Console.ReadLine()!);
         
-        Inventory.AddProduct(new Product(name, price, quantity));
+        Inventory.AddProduct(new Product(name!, price, quantity));
         
         ShowAnyKeyMessage("Product added! ");
     }

@@ -2,7 +2,7 @@
 
 public class Product
 { 
-    public string Name { get; private set; } 
+    public string? Name { get; private set; } 
     public double Price { get; private set; }
     public int Quantity { get; private set; }
 

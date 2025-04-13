@@ -25,7 +25,7 @@ public class Inventory
 
     public static Product? GetProduct(string productName)
     {
-        return Products.FirstOrDefault(p => p.Name.ToUpper() == productName.ToUpper());
+        return Products.FirstOrDefault(p => p.Name!.ToUpper() == productName.ToUpper());
     }
 
     public static void RemoveProduct(Product product)
