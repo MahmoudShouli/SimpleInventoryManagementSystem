@@ -3,8 +3,8 @@
 public class Product
 {
     public string Name { get; private set; } = "";
-    public double Price { get; private set; }
-    public int Quantity { get; private set; }
+    private double Price { get; set; }
+    private int Quantity { get; set; }
 
     public Product(string name, double price, int quantity)
     {

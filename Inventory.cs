@@ -4,7 +4,7 @@ namespace SimpleInventoryManagementSystem;
 
 public static class Inventory
 {
-    public static readonly List<Product> Products = [
+    private static readonly List<Product> Products = [
     
         new Product("Chair", 20.55, 5),
         new Product("Table", 50, 3),

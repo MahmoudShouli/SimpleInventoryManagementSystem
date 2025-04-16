@@ -48,17 +48,18 @@ public static class Utilities
     private static void PrintAddProductDetails()
     {
         Console.Clear();
+
+        var newProductValues = GetNewProductValues();
+
+        var p = Inventory.GetProduct((newProductValues.name));
+
+        if (p is not null)
+        {
+            PrintContinueMessage("This product already exists.");
+            return;
+        }
         
-        Console.WriteLine("Enter the new product name:");
-        var name = Console.ReadLine();
-        
-        Console.WriteLine("Enter the new product price:");
-        var price = double.Parse(Console.ReadLine()!);
-        
-        Console.WriteLine("Enter the new product quantity:");
-        var quantity = int.Parse(Console.ReadLine()!);
-        
-        Inventory.AddProduct(new Product(name!, price, quantity));
+        Inventory.AddProduct(new Product(newProductValues.name, newProductValues.price, newProductValues.quantity));
         
         PrintContinueMessage("Product added! ");
     }
@@ -79,16 +80,9 @@ public static class Utilities
 
         if (p != null)
         {
-            Console.WriteLine("Enter the new name:");
-            var newName = Console.ReadLine();
-        
-            Console.WriteLine("Enter the new price:");
-            var newPrice = double.Parse(Console.ReadLine()!);
-        
-            Console.WriteLine("Enter the new product quantity:");
-            var newQuantity = int.Parse(Console.ReadLine()!);
+            var newProductValues = GetNewProductValues();
             
-            p.EditProduct(newName!, newPrice, newQuantity);
+            p.EditProduct(newProductValues.name, newProductValues.price, newProductValues.quantity);
             
             PrintContinueMessage("Product edited! ");
 
@@ -133,6 +127,44 @@ public static class Utilities
         }
     }
     
+    private static (string name, double price, int quantity) GetNewProductValues()
+    {
+        Console.Clear();
+
+        string? name;
+        while (true)
+        {
+            Console.WriteLine("Enter the new name:");
+            name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name))
+                break;
+            Console.WriteLine("Name cannot be empty. Please try again.");
+        }
+
+        double price;
+        while (true)
+        {
+            Console.WriteLine("Enter the new price:");
+            var priceInput = Console.ReadLine();
+            if (double.TryParse(priceInput, out price) && price >= 0)
+                break;
+            Console.WriteLine("Invalid price. Please enter a valid non-negative number.");
+        }
+
+        int quantity;
+        while (true)
+        {
+            Console.WriteLine("Enter the new quantity:");
+            var quantityInput = Console.ReadLine();
+            if (int.TryParse(quantityInput, out quantity) && quantity >= 0)
+                break;
+            Console.WriteLine("Invalid quantity. Please enter a valid non-negative integer.");
+        }
+
+        return (name, price, quantity);
+    }
+
+    
     private static string ReadProductName()
     {
         Console.Clear();
@@ -143,10 +175,11 @@ public static class Utilities
         return name!;
         
     }
+    
     private static void PrintContinueMessage(string message)
     {
         Console.WriteLine();
-        Console.WriteLine(message + "Press any key to continue...");
+        Console.WriteLine(message + " Press any key to continue...");
         Console.ReadLine();
     }
 }
