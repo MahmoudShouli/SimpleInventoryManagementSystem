@@ -1,10 +1,9 @@
 ﻿namespace SimpleInventoryManagementSystem;
 
-class Program
+internal static class Program
 {
     private static void Main()
     {
-        Utilities.InitializeInventory();
-        Utilities.ShowMainMenu();
+        Utilities.PrintMainMenu();
     }
 }

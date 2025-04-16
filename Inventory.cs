@@ -2,9 +2,14 @@
 
 namespace SimpleInventoryManagementSystem;
 
-public class Inventory
+public static class Inventory
 {
-    public static readonly List<Product> Products = new();
+    private static readonly List<Product> Products = [
+    
+        new Product("Chair", 20.55, 5),
+        new Product("Table", 50, 3),
+        new Product("Pen", 5.4, 20)
+    ];
 
     public static void AddProduct(Product product)
     {
@@ -25,11 +30,13 @@ public class Inventory
 
     public static Product? GetProduct(string productName)
     {
-        return Products.FirstOrDefault(p => p.Name.ToUpper() == productName.ToUpper());
+        return Products.FirstOrDefault(p => string.Equals(p.Name, productName, StringComparison.OrdinalIgnoreCase));
     }
 
     public static void RemoveProduct(Product product)
     {
         Products.Remove(product);
     }
+    
+    
 }
