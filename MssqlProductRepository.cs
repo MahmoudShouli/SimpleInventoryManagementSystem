@@ -78,4 +78,38 @@ public class MssqlProductRepository(SqlConnection conn) : IProductRepository
             }
         }
     }
+
+    public Product? GetProductByName(string name)
+    {
+        using (conn)
+        {
+            conn.Open();
+
+            var query = "SELECT * FROM Products WHERE Name = @name";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@name", name);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            int id = reader.GetInt32(0);
+                            string productName = reader.GetString(1);
+                            decimal price = reader.GetDecimal(2);
+                            int quantity = reader.GetInt32(3);
+
+                            return new Product(id, productName, price, quantity);
+                        }
+                    }
+
+                    return null;
+                }
+            }
+        }
+    }
+
 }
