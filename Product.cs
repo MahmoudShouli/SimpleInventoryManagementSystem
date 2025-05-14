@@ -17,6 +17,6 @@ public class Product
     
     public override string ToString()
     {
-        return $"Name: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
+        return $"ID: {this.Id}, Name: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
     }
 }
