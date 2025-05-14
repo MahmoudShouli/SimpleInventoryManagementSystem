@@ -7,6 +7,13 @@ public class Product
     public decimal Price { get; set; }
     public int Quantity { get; set; }
 
+    public Product(string name, decimal price, int quantity)
+    {
+        this.Name = name;
+        this.Price = price;
+        this.Quantity = quantity;
+    }
+    
     public Product(int id, string name, decimal price, int quantity)
     {
         this.Id = id;
@@ -17,6 +24,6 @@ public class Product
     
     public override string ToString()
     {
-        return $"ID: {this.Id}, Name: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
+        return $"Name: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
     }
 }

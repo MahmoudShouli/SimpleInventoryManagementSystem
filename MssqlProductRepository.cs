@@ -2,11 +2,11 @@
 
 namespace SimpleInventoryManagementSystem;
 
-public class MssqlProductRepository(SqlConnection conn) : IProductRepository
+public class MssqlProductRepository(string connectionString) : IProductRepository
 {
     public void AddProduct(Product product)
     {
-        using (conn)
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
             conn.Open();
             var query = "INSERT INTO Products (Name, Price, Quantity) VALUES (@name, @price, @quantity)";
@@ -24,7 +24,7 @@ public class MssqlProductRepository(SqlConnection conn) : IProductRepository
     {
         var products = new List<Product>();
         
-        using (conn)
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
             conn.Open();
             
@@ -35,7 +35,7 @@ public class MssqlProductRepository(SqlConnection conn) : IProductRepository
                 while (reader.Read())
                 {
                     int id = reader.GetInt32(0);        
-                    string name = reader.GetString(1);  
+                    string name = reader.GetString(1).Trim();  
                     decimal price = reader.GetDecimal(2); 
                     int quantity = reader.GetInt32(3);  
 
@@ -49,7 +49,7 @@ public class MssqlProductRepository(SqlConnection conn) : IProductRepository
 
     public void DeleteProduct(int id)
     {
-        using (conn)
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
             conn.Open();
             var query = "DELETE FROM Products WHERE Id = @id";
@@ -62,18 +62,18 @@ public class MssqlProductRepository(SqlConnection conn) : IProductRepository
         }
     }
 
-    public void UpdateProduct(Product product)
+    public void UpdateProduct(int productId, string name, decimal price, int quantity)
     {
-        using (conn)
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
             conn.Open();
             var query = "UPDATE Products SET Name = @name, Price = @price, Quantity = @quantity WHERE Id = @id";
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@name", product.Name);
-                cmd.Parameters.AddWithValue("@price", product.Price);
-                cmd.Parameters.AddWithValue("@quantity", product.Quantity);
-                cmd.Parameters.AddWithValue("@id", product.Id);
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@price", price);
+                cmd.Parameters.AddWithValue("@quantity", quantity);
+                cmd.Parameters.AddWithValue("@id", productId);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -81,7 +81,7 @@ public class MssqlProductRepository(SqlConnection conn) : IProductRepository
 
     public Product? GetProductByName(string name)
     {
-        using (conn)
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
             conn.Open();
 
@@ -98,7 +98,7 @@ public class MssqlProductRepository(SqlConnection conn) : IProductRepository
                         while (reader.Read())
                         {
                             int id = reader.GetInt32(0);
-                            string productName = reader.GetString(1);
+                            string productName = reader.GetString(1).Trim();
                             decimal price = reader.GetDecimal(2);
                             int quantity = reader.GetInt32(3);
 
