@@ -6,5 +6,5 @@ public interface IProductRepository
     List<Product> GetAllProducts();
     void DeleteProduct(int id);
     void UpdateProduct(int productId, string name, decimal price, int quantity);
-    Product? GetProductByName(string productName);
+    Product? GetProductByName(string name);
 }
