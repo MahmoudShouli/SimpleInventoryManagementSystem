@@ -3,9 +3,9 @@
 public class Product
 {
     public int Id { get; set; }
-    public string Name { get; private set; } = "";
-    private double Price { get; set; }
-    private int Quantity { get; set; }
+    public string Name { get; set; } 
+    public double Price { get; set; }
+    public int Quantity { get; set; }
 
     public Product(int id, string name, double price, int quantity)
     {
