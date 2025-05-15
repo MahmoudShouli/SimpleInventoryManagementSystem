@@ -23,12 +23,12 @@ public class MongoProductRepository : IProductRepository
         return _products.Find(product => true).ToList();
     }
 
-    public void DeleteProduct(int id)
+    public void DeleteProduct(string id)
     {
         _products.DeleteOne(p => p.Id == id);
     }
 
-    public void UpdateProduct(int productId, string name, decimal price, int quantity)
+    public void UpdateProduct(string productId, string name, decimal price, int quantity)
     {
         var filter = Builders<Product>.Filter.Eq(p => p.Id, productId);
 

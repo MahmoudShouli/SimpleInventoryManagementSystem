@@ -1,29 +1,25 @@
-﻿namespace SimpleInventoryManagementSystem;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace SimpleInventoryManagementSystem;
 
 public class Product
 {
-    public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = String.Empty;
     public string Name { get; set; } 
     public decimal Price { get; set; }
     public int Quantity { get; set; }
 
     public Product(string name, decimal price, int quantity)
     {
-        this.Name = name;
-        this.Price = price;
-        this.Quantity = quantity;
+        Name = name;
+        Price = price;
+        Quantity = quantity;
     }
-    
-    public Product(int id, string name, decimal price, int quantity)
-    {
-        this.Id = id;
-        this.Name = name;
-        this.Price = price;
-        this.Quantity = quantity;
-    }
-    
     public override string ToString()
     {
-        return $"Name: {this.Name}, Price: ${this.Price}, Quantity: {this.Quantity}";
+        return $"Name: {Name}, Price: ${Price}, Quantity: {Quantity}";
     }
 }
