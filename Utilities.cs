@@ -1,8 +1,8 @@
 ﻿namespace SimpleInventoryManagementSystem;
 
-public static class Utilities
+public class Utilities(IProductRepository repository)
 {
-    public static void PrintMainMenu()
+    public void PrintMainMenu()
     {
         while (true)
         {
@@ -45,13 +45,13 @@ public static class Utilities
         }
     }
     
-    private static void PrintAddProductDetails()
+    private void PrintAddProductDetails()
     {
         Console.Clear();
 
         var newProductValues = GetNewProductValues();
 
-        var p = Inventory.GetProduct((newProductValues.name));
+        var p = repository.GetProductByName((newProductValues.name));
 
         if (p is not null)
         {
@@ -59,30 +59,31 @@ public static class Utilities
             return;
         }
         
-        Inventory.AddProduct(new Product(newProductValues.name, newProductValues.price, newProductValues.quantity));
+        repository.AddProduct(new Product(newProductValues.name, newProductValues.price, newProductValues.quantity));
         
         PrintContinueMessage("Product added! ");
     }
     
-    private static void PrintAllProducts()
+    private void PrintAllProducts()
     {
         Console.Clear();
         Console.WriteLine("All products:");
         
-        Console.WriteLine(Inventory.ViewProducts());
+        List<Product> products = repository.GetAllProducts();
+        products.ForEach(Console.WriteLine);
         
         PrintContinueMessage("");
     }
     
-    private static void PrintEditProductDetails()
+    private void PrintEditProductDetails()
     {
-        var p = Inventory.GetProduct(ReadProductName());
+        var product = repository.GetProductByName(ReadProductName());
 
-        if (p != null)
+        if (product != null)
         {
             var newProductValues = GetNewProductValues();
             
-            p.EditProduct(newProductValues.name, newProductValues.price, newProductValues.quantity);
+            repository.UpdateProduct(product.Id, newProductValues.name, newProductValues.price, newProductValues.quantity);
             
             PrintContinueMessage("Product edited! ");
 
@@ -93,13 +94,13 @@ public static class Utilities
         }
     }
     
-    private static void PrintRemoveProductDetails()
+    private void PrintRemoveProductDetails()
     {
-        var p = Inventory.GetProduct(ReadProductName());
+        var product = repository.GetProductByName(ReadProductName());
 
-        if (p != null)
+        if (product != null)
         {
-            Inventory.RemoveProduct(p);
+            repository.DeleteProduct(product.Id);
             
             PrintContinueMessage("Product deleted! ");
         }
@@ -109,14 +110,14 @@ public static class Utilities
         }
     }
     
-    private static void PrintSearchProductDetails()
+    private void PrintSearchProductDetails()
     {
-        var p = Inventory.GetProduct(ReadProductName());
+        var product = repository.GetProductByName(ReadProductName());
 
-        if (p != null)
+        if (product != null)
         {
             Console.WriteLine("Product details:");
-            Console.WriteLine(p);
+            Console.WriteLine(product);
             Console.WriteLine();
             
             PrintContinueMessage("");
@@ -127,7 +128,7 @@ public static class Utilities
         }
     }
     
-    private static (string name, double price, int quantity) GetNewProductValues()
+    private (string name, decimal price, int quantity) GetNewProductValues()
     {
         Console.Clear();
 
@@ -141,12 +142,12 @@ public static class Utilities
             Console.WriteLine("Name cannot be empty. Please try again.");
         }
 
-        double price;
+        decimal price;
         while (true)
         {
             Console.WriteLine("Enter the new price:");
             var priceInput = Console.ReadLine();
-            if (double.TryParse(priceInput, out price) && price >= 0)
+            if (decimal.TryParse(priceInput, out price) && price >= 0)
                 break;
             Console.WriteLine("Invalid price. Please enter a valid non-negative number.");
         }

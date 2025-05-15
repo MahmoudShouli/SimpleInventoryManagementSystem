@@ -1,9 +1,15 @@
-﻿namespace SimpleInventoryManagementSystem;
+﻿using Microsoft.Data.SqlClient;
 
-internal static class Program
+namespace SimpleInventoryManagementSystem;
+
+internal class Program
 {
+    private static string _connectionString = "Server=localhost;Database=SimpleInventoryManagementSystem;Trusted_Connection=True;Encrypt=False;";
+    public static MssqlProductRepository Repository = new MssqlProductRepository(_connectionString);
+
     private static void Main()
     {
-        Utilities.PrintMainMenu();
+        Utilities utilities =  new Utilities(Repository);
+        utilities.PrintMainMenu();
     }
 }
